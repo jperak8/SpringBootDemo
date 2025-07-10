@@ -3,8 +3,8 @@ package hr.java.spring.boot.example.hardware.controller;
 import hr.java.spring.boot.example.hardware.dto.HardwareDTO;
 import hr.java.spring.boot.example.hardware.service.HardwareService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 import java.util.List;
 
@@ -16,27 +16,44 @@ public class HardwareController {
     private final HardwareService hardwareService;
 
     @GetMapping
-    public List<HardwareDTO> getAllHardware() {
-        return hardwareService.getAllHardware();
+    public ResponseEntity<List<HardwareDTO>> getAllHardware() {
+        List<HardwareDTO> hardware = hardwareService.getAllHardware();
+        return ResponseEntity.ok(hardware);
     }
 
     @GetMapping("/{code}")
-    public List<HardwareDTO> getHardwareByCode(@PathVariable String code) {
-        return hardwareService.getHardwareByCode(code);
+    public ResponseEntity<List<HardwareDTO>> getHardwareByCode(@PathVariable String code) {
+        List<HardwareDTO> result = hardwareService.getHardwareByCode(code);
+        if (result.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping
-    public void addHardware(@RequestBody HardwareDTO hardwareDTO) {
-        hardwareService.addHardware(hardwareDTO);
+    public ResponseEntity<HardwareDTO> addHardware(@RequestBody HardwareDTO hardwareDTO) {
+        HardwareDTO created = hardwareService.addHardware(hardwareDTO);
+        URI location = URI.create("/api/hardware/" + created.getName().replace(" ", "_"));
+        return ResponseEntity.created(location).body(created); // 201 Created + object
     }
 
     @PutMapping("/{code}")
-    public void updateHardware(@PathVariable String code, @RequestBody HardwareDTO hardwareDTO) {
-        hardwareService.updateHardware(code, hardwareDTO);
+    public ResponseEntity<Void> updateHardware(@PathVariable String code, @RequestBody HardwareDTO hardwareDTO) {
+        boolean updated = hardwareService.updateHardware(code, hardwareDTO);
+        if (updated) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{code}")
-    public void deleteHardware(@PathVariable String code) {
-        hardwareService.deleteHardware(code);
+    public ResponseEntity<Void> deleteHardware(@PathVariable String code) {
+        boolean deleted = hardwareService.deleteHardware(code);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

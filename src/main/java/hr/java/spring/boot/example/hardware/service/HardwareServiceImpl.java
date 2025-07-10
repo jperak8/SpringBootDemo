@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+
 @Service
 @AllArgsConstructor
 public class HardwareServiceImpl implements HardwareService {
@@ -23,18 +24,19 @@ public class HardwareServiceImpl implements HardwareService {
     }
 
     @Override
-    public void addHardware(HardwareDTO hardwareDTO) {
-        hardwareRepository.addHardware(hardwareDTO);
+    public HardwareDTO addHardware(HardwareDTO hardwareDTO) {
+        return hardwareRepository.addHardware(hardwareDTO);
     }
 
     @Override
-    public void updateHardware(String code, HardwareDTO hardwareDTO) {
-        hardwareRepository.updateHardware(code, hardwareDTO);
+    public boolean updateHardware(String code, HardwareDTO hardwareDTO) {
+        return hardwareRepository.updateHardware(code, hardwareDTO);
     }
 
     @Override
-    public void deleteHardware(String code) {
-        hardwareRepository.deleteHardware(code);
+    public boolean deleteHardware(String code) {
+        return hardwareRepository.deleteHardware(code);
     }
 }
+
 

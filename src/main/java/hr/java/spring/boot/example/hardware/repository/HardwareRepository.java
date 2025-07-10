@@ -6,7 +6,7 @@ import java.util.List;
 public interface HardwareRepository {
     List<HardwareDTO> getAllHardware();
     List<HardwareDTO> getHardwareByCode(String code);
-    void addHardware(HardwareDTO hardwareDTO);
-    void updateHardware(String code, HardwareDTO hardwareDTO);
-    void deleteHardware(String code);
+    HardwareDTO addHardware(HardwareDTO hardwareDTO);
+    boolean updateHardware(String code, HardwareDTO hardwareDTO);
+    boolean deleteHardware(String code);
 }

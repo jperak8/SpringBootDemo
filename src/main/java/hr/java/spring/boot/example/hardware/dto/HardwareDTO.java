@@ -2,7 +2,6 @@ package hr.java.spring.boot.example.hardware.dto;
 
 import hr.java.spring.boot.example.hardware.model.HardwareType;
 import jakarta.validation.constraints.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

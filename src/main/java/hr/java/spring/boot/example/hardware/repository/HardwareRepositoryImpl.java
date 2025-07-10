@@ -58,34 +58,32 @@ public class HardwareRepositoryImpl implements HardwareRepository {
     }
 
     @Override
-    public void addHardware(HardwareDTO dto) {
-        Hardware hardware = new Hardware(
-                dto.getName(),
-                generateUniqueCode(),
-                dto.getPrice(),
-                dto.getType(),
-                dto.getQuantity()
-        );
-        hardwareList.add(hardware);
+    public HardwareDTO addHardware(HardwareDTO dto) {
+        String code = "HW" + (hardwareList.size() + 1);
+        Hardware hw = new Hardware(dto.getName(), code, dto.getPrice(), dto.getType(), dto.getQuantity());
+        hardwareList.add(hw);
+        return mapToDTO(hw);
     }
 
     @Override
-    public void updateHardware(String code, HardwareDTO dto) {
+    public boolean updateHardware(String code, HardwareDTO dto) {
         for (Hardware hw : hardwareList) {
             if (hw.getCode().equalsIgnoreCase(code)) {
                 hw.setName(dto.getName());
                 hw.setPrice(dto.getPrice());
                 hw.setType(dto.getType());
                 hw.setQuantity(dto.getQuantity());
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public void deleteHardware(String code) {
-        hardwareList.removeIf(hw -> hw.getCode().equalsIgnoreCase(code));
+    public boolean deleteHardware(String code) {
+        return hardwareList.removeIf(hw -> hw.getCode().equalsIgnoreCase(code));
     }
+
 
     private String generateUniqueCode() {
         return "HW" + (hardwareList.size() + 1);
