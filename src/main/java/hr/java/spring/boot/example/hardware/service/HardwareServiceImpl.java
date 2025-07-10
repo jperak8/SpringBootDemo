@@ -10,15 +10,31 @@ import java.util.List;
 @AllArgsConstructor
 public class HardwareServiceImpl implements HardwareService {
 
-    private HardwareRepository hardwareRepository;
+    private final HardwareRepository hardwareRepository;
 
     @Override
     public List<HardwareDTO> getAllHardware() {
-        return hardwareRepository.getAllHardware().stream().toList();
+        return hardwareRepository.getAllHardware();
     }
 
     @Override
     public List<HardwareDTO> getHardwareByCode(String code) {
-        return hardwareRepository.getHardwareByCode(code).stream().toList();
+        return hardwareRepository.getHardwareByCode(code);
+    }
+
+    @Override
+    public void addHardware(HardwareDTO hardwareDTO) {
+        hardwareRepository.addHardware(hardwareDTO);
+    }
+
+    @Override
+    public void updateHardware(String code, HardwareDTO hardwareDTO) {
+        hardwareRepository.updateHardware(code, hardwareDTO);
+    }
+
+    @Override
+    public void deleteHardware(String code) {
+        hardwareRepository.deleteHardware(code);
     }
 }
+

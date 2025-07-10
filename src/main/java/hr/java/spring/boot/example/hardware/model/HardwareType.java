@@ -4,5 +4,6 @@ public enum HardwareType {
     CPU,
     GPU,
     MBO,
-    RAM
+    RAM,
+    STORAGE
 }
