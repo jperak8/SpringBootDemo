@@ -15,6 +15,10 @@ public class HardwareDTO {
     @Size(max = 100, message = "Name must be at most 100 characters")
     private String name;
 
+    @NotBlank(message = "Code is required")
+    @Size(max = 100, message = "Code must be at most 100 characters")
+    private String code;
+
     @NotNull(message = "Price is required")
     @Positive(message = "Price must be greater than zero")
     private Double price;

@@ -51,6 +51,7 @@ public class HardwareRepositoryImpl implements HardwareRepository {
     private HardwareDTO mapToDTO(Hardware hardware) {
         return new HardwareDTO(
                 hardware.getName(),
+                hardware.getCode(),
                 hardware.getPrice(),
                 hardware.getType(),
                 hardware.getQuantity()

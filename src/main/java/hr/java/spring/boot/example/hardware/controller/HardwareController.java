@@ -33,8 +33,9 @@ public class HardwareController {
     @PostMapping
     public ResponseEntity<HardwareDTO> addHardware(@RequestBody HardwareDTO hardwareDTO) {
         HardwareDTO created = hardwareService.addHardware(hardwareDTO);
-        URI location = URI.create("/api/hardware/" + created.getName().replace(" ", "_"));
-        return ResponseEntity.created(location).body(created); // 201 Created + object
+        URI location = URI.create("/api/hardware/" + created.getCode());
+
+        return ResponseEntity.created(location).body(created);
     }
 
     @PutMapping("/{code}")
