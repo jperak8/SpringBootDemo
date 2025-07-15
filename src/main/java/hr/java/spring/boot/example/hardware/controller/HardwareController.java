@@ -2,6 +2,7 @@ package hr.java.spring.boot.example.hardware.controller;
 
 import hr.java.spring.boot.example.hardware.dto.HardwareDTO;
 import hr.java.spring.boot.example.hardware.service.HardwareService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class HardwareController {
     }
 
     @PostMapping
-    public ResponseEntity<HardwareDTO> addHardware(@RequestBody HardwareDTO hardwareDTO) {
+    public ResponseEntity<HardwareDTO> addHardware(@Valid @RequestBody HardwareDTO hardwareDTO) {
         HardwareDTO created = hardwareService.addHardware(hardwareDTO);
         URI location = URI.create("/api/hardware/" + created.getCode());
 
@@ -39,7 +40,7 @@ public class HardwareController {
     }
 
     @PutMapping("/{code}")
-    public ResponseEntity<Void> updateHardware(@PathVariable String code, @RequestBody HardwareDTO hardwareDTO) {
+    public ResponseEntity<Void> updateHardware(@PathVariable String code, @Valid @RequestBody HardwareDTO hardwareDTO) {
         boolean updated = hardwareService.updateHardware(code, hardwareDTO);
         if (updated) {
             return ResponseEntity.ok().build();
